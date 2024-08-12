@@ -51,5 +51,14 @@ export default class Bank {
       account.balance -= amount;
       return `Successfully withdrew $${amount} from account ${accountNumber}. New balance is $${account.balance}.`;
     }
+
+    checkBalance(accountNumber: string): string {
+      const account = this.findAccount(accountNumber);
+      if (!account) {
+        throw new Error("Account not found");
+      }
+  
+      return `The balance of account ${accountNumber} is $${account.balance}.`;
+    }
 }
   
