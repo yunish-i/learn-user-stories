@@ -1,6 +1,6 @@
 import Bank from '../src/user/bank';
 
-// scenario 1 test
+// scenario 1 test 
 const bank = new Bank();
 bank.createAccount('1234567890');
 bank.deposit('1234567890', 100);
