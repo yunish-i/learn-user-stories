@@ -19,5 +19,19 @@ export default class Bank {
     findAccount(accountNumber: string): BankAccount | undefined {
         return this.accounts.find(account => account.accountNumber === accountNumber);
     }
+
+    deposit(accountNumber: string, amount: number): string {
+        const account = this.findAccount(accountNumber);
+        if (!account) {
+          throw new Error("Account not found");
+        }
+    
+        if (amount <= 0) {
+          throw new Error("Deposit amount must be positive");
+        }
+    
+        account.balance += amount;
+        return `Successfully deposited $${amount} into account ${accountNumber}. New balance is $${account.balance}.`;
+      }
 }
   
