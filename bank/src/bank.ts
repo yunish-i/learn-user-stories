@@ -6,6 +6,7 @@ interface BankAccount {
 export default class Bank {
     private accounts: BankAccount[] = [];
 
+    // creates a new account with the given account number and a balance of 0
     createAccount(accountNumber: string): BankAccount {
         if(this.findAccount(accountNumber)) {
             throw new Error('Account already exists');
