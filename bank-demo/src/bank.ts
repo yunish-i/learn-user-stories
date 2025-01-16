@@ -1,47 +1,49 @@
+import { BankType, AccountType } from './types';
 
-// Indictes the type for all bank accounts in the bank
-interface BankAccount {
-    name: string;
-    age: number;
-    accountNumber: string;
-    balance: number;
-} 
+export class Bank implements BankType {
+    private accounts: AccountType[] = [];
+    private usernames: string[] = [];
 
-/**
- * Bank class that manages all bank accounts in the bank
- */
-export default class Bank {
-    // Array to store all bank accounts in the bank 
-    private accounts: BankAccount[] = [];
-
-    /**
-     * Method to find a bank account in the bank
-     * @param {string} accountNumber Account number of the bank account to find
-     * @returns Bank account if found, undefined otherwise
-     */
-    private findAccount(accountNumber: string): BankAccount | undefined {
-        return this.accounts.find(account => account.accountNumber === accountNumber);
+    public constructor(accounts: AccountType[], usernames: string[]) {
+        this.accounts = accounts;
+        this.usernames = usernames;
     }
 
-    /**
-     * creates a new account with a unique account number
-     * @param name -- name of the customer
-     * @param age -- age of the customer
-     * @param accountNumber -- account number of the customer
-     * @returns BankAccount -- the created account
-     */
-    public createAccount(name: string, age: number, accountNumber: string): BankAccount {
-        const isAccExists = this.findAccount(accountNumber);
-        if(isAccExists) {
-            throw new Error("Account already exists");
-        }
-        const account: BankAccount = {
-            name,
-            age,
-            accountNumber,
-            balance: 0
-        };
+    private addAccount(account: AccountType): void {
         this.accounts.push(account);
+    }
+
+    private isIdValid(id: number): boolean {
+        return id.toString().length === 10;
+    }
+
+    private findAccountById(id: number): AccountType | undefined {
+        return this.accounts.find(account => account.id === id);
+    }
+
+    private isUsernameExists(username: string): boolean {
+        return this.usernames.includes(username);
+    }
+
+    public createAccount(username: string, age: number, accountNumber: number): AccountType {
+        if (this.isUsernameExists(username)) {
+            throw new Error('Username already exists');
+        }
+        if(!this.isIdValid(accountNumber)) {
+            throw new Error('Invalid account number');
+        }
+        if(this.findAccountById(accountNumber)) {
+            throw new Error('Account already exists');
+        }
+        if(age < 18) {
+            throw new Error('Age must be at least 18');
+        }
+        const account: AccountType = {
+            id: accountNumber,
+            balance: 0,
+        };
+        this.addAccount(account);
+        this.usernames.push(username);
         return account;
     }
 }
