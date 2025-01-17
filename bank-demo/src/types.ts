@@ -3,6 +3,7 @@ export type AccountType = {
     balance: number
 }
 
+
 export interface BankType {
     createAccount(username: string, age: number, accountNumber: number): AccountType
 }
