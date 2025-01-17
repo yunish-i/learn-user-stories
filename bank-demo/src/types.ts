@@ -6,3 +6,4 @@ export type AccountType = {
 export interface BankType {
     createAccount(username: string, age: number, accountNumber: number): AccountType
 }
+
